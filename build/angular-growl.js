@@ -1,7 +1,7 @@
 /**
- * angular-growl - v0.4.0 - 2013-11-19
+ * angular-growl - v0.4.0 - 2015-02-27
  * https://github.com/marcorinck/angular-growl
- * Copyright (c) 2013 Marco Rinck; Licensed MIT
+ * Copyright (c) 2015 Marco Rinck; Licensed MIT
  */
 angular.module('angular-growl', []);
 angular.module('angular-growl').directive('growl', [
