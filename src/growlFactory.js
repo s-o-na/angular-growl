@@ -63,27 +63,27 @@ angular.module("angular-growl").provider("growl", function() {
 	 * via $httpProvider.responseInterceptors.push(...)
 	 *
 	 */
-	this.serverMessagesInterceptor = ['$q', 'growl', function ($q, growl) {
-		function checkResponse(response) {
-			if (response.data[_messagesKey] && response.data[_messagesKey].length > 0) {
-				growl.addServerMessages(response.data[_messagesKey]);
-			}
-		}
-
-		function success(response) {
-			checkResponse(response);
-			return response;
-		}
-
-		function error(response) {
-			checkResponse(response);
-			return $q.reject(response);
-		}
-
-		return function (promise) {
-			return promise.then(success, error);
-		};
-	}];
+	this.serverMessagesInterceptor = [
+    '$q',
+    'growl',
+    function ($q, growl) {
+      function checkResponse(response) {
+        if (response.data && response.data[_messagesKey] && response.data[_messagesKey].length > 0) {
+          growl.addServerMessages(response.data[_messagesKey]);
+        }
+      }
+      return {
+        response: function (response) {
+          checkResponse(response);
+          return response;
+        },
+        responseError: function (response) {
+          checkResponse(response);
+          return $q.reject(response);
+        }
+      };
+    }
+  ];
 
 	this.$get = ["$rootScope", "$filter", function ($rootScope, $filter) {
 		var translate;
